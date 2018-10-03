@@ -1,209 +1,195 @@
-# Cards and Actions Using Outlook Actionable Messages – 300 Level
-----------------
-In this lab, you will walk through building building an Actionable Message card using the [MessageCard Playground](https://messagecardplayground.azurewebsites.net/) app.
+# Demo: Cards and Actions Using Outlook Actionable Messages
 
+This demo will walk through building building an Actionable Message card using the [MessageCard Playground](https://messagecardplayground.azurewebsites.net/) app.
 
 ## Prerequisites
 
 This demo requires an Office 365 subscription with an active mailbox and a **Microsoft Azure** subscription.
 
-## Setup
+## Select a MessageCard to edit
 
-This lab will use an Azure Web App to deploy an application. The URL of the web app is required. Visit the [Microsoft Azure Portal](https://portal.azure.com) and create a new Web App using the Free pricing plan. Copy the URL (for example, https://mywebapp.azurewebsites.net) for later use.
+1. Visit the [MessageCard Playground](https://messagecardplayground.azurewebsites.net/) app.
 
+    ![Screenshot of MessageCard Playground app.](../../Images/playground.png)
 
-## 1. Actionable Messages card design and MessageCard Playground
+    The MessageCard Playground provides a sandboxed environment with which to design and test your cards. You can choose from a list of existing samples or load your own sample. Each of these samples provides an interesting component of the syntax used to design a card. You can make modifications within the page that are shown visually, enabling you to quickly modify a card's design.
 
-This lab will walk you through designing an Actionable Message card using the [MessageCard Playground](https://messagecardplayground.azurewebsites.net/) app.
+1. In the drop-down menu, choose **GitHub - Issue opened**.
 
-### Visit the MessageCard Playground
+    ![Screenshot of GitHub - Issue opened card.](Images/Exercise1_02.png)
 
-Visit the [MessageCard Playground](https://messagecardplayground.azurewebsites.net/) app.
+## Modify a sample
 
-![](../../Images/playground.png)
+1. Edit the `activityTitle` element to surround it with two asterisks instead of none:
 
-The MessageCard Playground provides a sandboxed environment with which to design and test your cards. You can choose from a list of existing samples or load your own sample. Each of these samples provides an interesting component of the syntax used to design a card. You can make modifications within the page that are shown visually, enabling you to quickly modify a card's design.
+    ![Screenshot of Microsoft Flow approval with title highlighted.](Images/Exercise1_03.png)
 
-One of the simplest sample cards to start with is the **Twitter - Hero Image** sample card. In the drop-down, choose **Twitter - Hero Image**.
+    >Note: You can use basic markdown formatting for text elements within the card.
 
-![](../../Images/twitterheroimage.png)
+1. Open your browser and go to the [Training Content Issue 493](https://github.com/OfficeDev/TrainingContent/issues/493).
 
-This card demonstrates basic text formatting with markdown, using images, and provides a sample of potential actions.
+    ![Screenshot of GitHub Training Content Issue 493.](Images/Exercise1_04.png)
 
-### Modify a sample 
+1. Replace the JSON in the MessageCard Playground app with the following code:
 
-Edit the **activityTitle** element to surround it with three asterisks instead of two:
-
-![](../../Images/activitytitle.png)
-
-Notice the title in the card is now bold and italics. You can use basic markdown formatting for text elements within the card. 
-
-Open your browser to the [SpaceX Twitter page](https://twitter.com/SpaceX/status/908827608678244352) from September 15 2017.
-
-![](../../Images/spacextwitter.png)
-
-You will use the information on that page to see how to customize a card sample. Replace the activitySubtitle, activityText, and heroImage properties to reflect the information shown in that tweet. Additionally, change the potentialAction element to use the OpenUri URL to the tweet.
-
-**Replace** the JSON in the MessageCard Playground app with the following:
-
-````json
-{
-	"@type": "MessageCard",
-	"@context": "http://schema.org/extensions",
-	"themeColor": "E81123",
-	"sections": [
-		{
-			"activityTitle": "**SpaceX**",
-			"activitySubtitle": "@SpaceX - 15 Sep 2017",
-			"activityImage": "https://pbs.twimg.com/profile_images/671865418701606912/HECw8AzK_400x400.jpg",
-			"activityText": "After a month-long stay at the @Space_Station, Dragon returns to Earth on Sunday, September 17 → [https://go.nasa.gov/2h3ysMu](https://go.nasa.gov/2h3ysMu)",
-			"heroImage": {
-                "image": "https://pbs.twimg.com/media/DJtJmfMUEAAmwEj.jpg"			    
-			},
-			"potentialAction": [
-				{
-					"@type": "OpenUri",
-					"name": "View in Twitter",
-					"targets": [
-						{
-							"os": "default",
-							"uri": "https://twitter.com/SpaceX/status/908827608678244352"
-						}
-					]
-				}
-			]
-		}
-	]
-}
-````
-![](../../Images/updatedspacex.png)
-
-The message card now reflects a different tweet. This demonstrates how your application can change the information in a card and send it to a user or group.
-
-Now let's see how changing the action affected the card. Click on the **View in Twitter** button.
-![](../../Images/sandboxaction.png)
-
-Actions in the MessageCard Playground app are disabled, only prompting the information that you provided in the card. However, you can send the card to your Office 365 email account to view the card and interact with its actions. Click the **Send via Email** button to send the card to yourself in email.
-
-![](../../Images/spacexcardemail.png)
-
-Finally, click the **View in Twitter** button and see that your browser opens and the original Twitter page is displayed.
-
-Explore the other samples in the MessageCard Playground app. These are good references from which to base your own card design. 
-
-### Create a card
-The card you will use for the rest of the lab represents a fictitious expense approval system and has the following markup:
-````json
-{
-    "@type": "MessageCard",
-    "@context": "http://schema.org/extensions",
-    "summary": "This is the summary property",
-    "themeColor": "0075FF",
-    "sections":
-    [
-      {
-        "heroImage":
+    ````json
+    {
+      "@type": "MessageCard",
+      "@context": "http://schema.org/extensions",
+      "summary": "Issue 176715375",
+      "themeColor": "0078D7",
+      "title": "Issue opened: \"Is the Stock Service Down?\"",
+      "sections": [
         {
-          "image": "http://messagecardplayground.azurewebsites.net/assets/FlowLogo.png"
+          "activityTitle": "MatthewMcD",
+          "activitySubtitle": "5/20/2018, 12:36pm",
+          "activityImage": "https://avatars1.githubusercontent.com/u/7558738?s=460&v=4",
+          "facts": [
+            {
+              "name": "Repository:",
+              "value": "OfficeDev\\TrainingContent"
+            },
+            {
+              "name": "Issue #:",
+              "value": "493"
+            }
+          ],
+          "text": "Attempting the Office Add-In modules. Attempting to connect to https://estx.azurewebsites.net/api/quote/msft and getting 500 Server Error. Who controls that endpoint?"
         }
-      },
-      {
-        "startGroup": true,
-        "title": "**Pending approval**",
-        "activityImage": "http://connectorsdemo.azurewebsites.net/images/MSC12_Oscar_002.jpg",
-        "activityTitle": "Requested by **Miguel Garcia**",
-        "activitySubtitle": "m.garcia@contoso.com",
-        "facts":
-        [
-          {
-            "name": "Date submitted:",
-            "value": "06/27/2017, 2:44 PM"
-          },
-          {
-            "name": "Details:",
-            "value": "Please approve this expense report for **$123.45**."
-          },
-          {
-            "name": "Link:",
-            "value": "[Link to the expense report](http://messagecardplayground.azurewebsites.net)"
+      ],
+      "potentialAction": [
+        {
+          "@type": "OpenUri",
+          "name": "View in GitHub",
+          "targets": [
+            { "os": "default", "uri": "https://github.com/OfficeDev/TrainingContent/issues/493" }
+          ]
+        }
+      ]
+    }
+    ````
+
+    ![Screenshot of JSON and GitHub - Issue opened card side by side.](Images/Exercise1_05.png)
+
+    The message card now reflects a different GitHub issue. This demonstrates how your application can change the information in a card and send it to a user or group.
+
+1. Select the **View in GitHub** button to see the issue.
+
+    ![Screenshot of action message in MessageCard Playground app.](Images/Exercise1_06.png)
+
+    Actions in the MessageCard Playground app are disabled, only prompting the information that you provided in the card. However, you can send the card to your Office 365 email account to view the card and interact with its actions.
+
+1. Select the **Send via Email** button to send the card to yourself in email. If you are not logged in to the MessageCard Playground it will prompt you to log in and then ask for your consent.  When consent is given the MessageCard Playground page will reload and you will need to load the sample again.
+
+    ![Screenshot of test message card in email.](Images/Exercise1_07.png)
+
+1. Select the **View in GitHub** button and see that your browser opens and the original GitHub issue page is displayed.
+
+1. Explore the other samples in the MessageCard Playground app. These are good references to use as a basis for your own card design.
+
+## Create a card
+
+1. Replace the JSON data in the MessageCard Playground app with this JSON data, making sure that the URL for your Azure Web App uses the HTTPS protocol. This is the card you will use for the rest of the lab. It is a fictitious expense approval system.
+
+    ````json
+    {
+      "@type": "MessageCard",
+      "@context": "http://schema.org/extensions",
+      "summary": "This is the summary property",
+      "themeColor": "0075FF",
+      "sections": [
+        {
+          "heroImage": {
+            "image": "http://messagecardplayground.azurewebsites.net/assets/FlowLogo.png"
           }
-        ]
-      },
-      {
-        "potentialAction":
-        [
-          {
-            "@type": "ActionCard",
-            "name": "Approve",
-            "inputs":
-            [
-              {
-                "@type": "TextInput",
-                "id": "comment",
-                "isMultiline": true,
-                "title": "Reason (optional)"
-              }
-            ],
-            "actions":
-            [
-              {
-                "@type": "HttpPOST",
-                "name": "Submit",
-                "target": "https://YOURWEBAPPNAME.azurewebsites.net/api/expense?id=9876&action=approve",
-                "body": "={{comment.value}}",
-                "headers":
-                [
-                  {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "@type": "ActionCard",
-            "name": "Reject",
-            "inputs":
-            [
-              {
-                "@type": "TextInput",
-                "id": "comment",
-                "isMultiline": true,
-                "title": "Reason (optional)"
-              }
-            ],
-            "actions":
-            [
-              {
-                "@type": "HttpPOST",
-                "name": "Submit",
-                "target": "https://YOURWEBAPPNAME.azurewebsites.net/api/expense?id=9876&action=approve",
-                "body": "={{comment.value}}",
-                "headers":
-                [
-                  {
-                    "Content-Type": "application/x-www-form-urlencoded"
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      {
-        "startGroup": true,
-        "activitySubtitle": "Grant approvals directly from your mobile device with the Microsoft Flow app. [Learn more](http://learnmode)\n\nThis message was created by an automated workflow in Microsoft Flow. Do not reply."
-      }
-    ]
-  }  
-````
-Note the *YOURWEBAPPNAME.azurewebsites.net* placeholder used in this sample. Replace it with the Azure Web App URL that you created earlier in this lab.
+        },
+        {
+          "startGroup": true,
+          "title": "**Pending approval**",
+          "activityImage": "http://connectorsdemo.azurewebsites.net/images/MSC12_Oscar_002.jpg",
+          "activityTitle": "Requested by **Miguel Garcia**",
+          "activitySubtitle": "m.garcia@contoso.com",
+          "facts": [
+            {
+              "name": "Date submitted:",
+              "value": "06/27/2017, 2:44 PM"
+            },
+            {
+              "name": "Details:",
+              "value": "Please approve this expense report for **$123.45**."
+            },
+            {
+              "name": "Link:",
+              "value": "[Link to the expense report](http://messagecardplayground.azurewebsites.net)"
+            }
+          ]
+        },
+        {
+          "potentialAction": [
+            {
+              "@type": "ActionCard",
+              "name": "Approve",
+              "inputs": [
+                {
+                  "@type": "TextInput",
+                  "id": "comment",
+                  "isMultiline": true,
+                  "title": "Reason (optional)"
+                }
+              ],
+              "actions": [
+                {
+                  "@type": "HttpPOST",
+                  "name": "Submit",
+                  "target": "https://YOURWEBAPPNAME.azurewebsites.net/api/expense?id=9876&action=approve",
+                  "body": "={{comment.value}}",
+                  "headers": [
+                    {
+                      "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "@type": "ActionCard",
+              "name": "Reject",
+              "inputs": [
+                {
+                  "@type": "TextInput",
+                  "id": "comment",
+                  "isMultiline": true,
+                  "title": "Reason (optional)"
+                }
+              ],
+              "actions": [
+                {
+                  "@type": "HttpPOST",
+                  "name": "Submit",
+                  "target": "https://YOURWEBAPPNAME.azurewebsites.net/api/expense?id=9876&action=approve",
+                  "body": "={{comment.value}}",
+                  "headers": [
+                    {
+                      "Content-Type": "application/x-www-form-urlencoded"
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "startGroup": true,
+          "activitySubtitle": "Grant approvals directly from your mobile device with the Microsoft Flow app. [Learn more](http://learnmode)\n\nThis message was created by an automated workflow in Microsoft Flow. Do not reply."
+        }
+      ]
+    }
+    ````
 
-**Replace** the JSON data in the MessageCard Playground app with this JSON data, making sure that the URL for your Azure Web App uses the https protocol.
+    >Note: Replace both instances of the `YOURWEBAPPNAME.azurewebsites.net` placeholders with the Azure Web App URL that you created earlier in this lab.
 
-Click **Send via Email** to send the card to yourself.
+1. Select **Send via Email** to send the card to yourself.
 
-Check your email and open the message. Click the **Approve** button. You will see text below the button that says "The action could not be completed." We have not yet registered the action or implemented the web site, we will do that in this lab.
+1. Check your email and open the message. Select the **approve** button. You will see text below the button that says "The action could not be completed." This happened because you have not yet registered the action or implemented the web site, you will do that in this lab.
 
-Finally, **save** the JSON representing the expense report to your file system. You will use this later in the lab.
-
+1. Save the JSON representing the expense report to your file system. You will use this later in the lab.
